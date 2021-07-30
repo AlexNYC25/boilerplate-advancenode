@@ -32,7 +32,7 @@ myDB(async (client) => {
   const myDataBase = await client.db('database').collection('users');
 
   app.route('/').get((req, res) => {
-    res.render('index', {
+    res.render(process.cwd() + '/views/pug/index', {
       title: 'Connected to Database',
       message: 'Please logie'
     });
@@ -52,7 +52,7 @@ myDB(async (client) => {
   });
 }).catch((err) => {
   app.route('/').get((req, res) => {
-    res.render('index', {
+    res.render(process.cwd() + '/views/pug/index', {
       title: err,
       message: 'Unable to login'
     });
