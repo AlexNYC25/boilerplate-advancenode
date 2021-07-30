@@ -40,6 +40,14 @@ myDB(async (client) => {
     });
   });
 
+  app.route('/login').post(passport.authenticate('local', { failureRedirect: '/' }), (req, res) => {
+    res.redirect('/profile');
+  });
+
+  app.route('/profile').get((req, res) => {
+    res.render(process.cwd() + '/views/pug/profile');
+  });
+
 
   passport.serializeUser((user, done) => {
     done(null, user._id);
