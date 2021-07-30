@@ -36,7 +36,8 @@ myDB(async (client) => {
     res.render(process.cwd() + '/views/pug/index', {
       title: 'Connected to Database',
       message: 'Please logie',
-      showLogin: true
+      showLogin: true,
+      showRegister: true
     });
   });
 
