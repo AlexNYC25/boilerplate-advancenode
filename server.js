@@ -44,7 +44,7 @@ myDB(async (client) => {
     res.redirect('/profile');
   });
 
-  app.route('/profile').get((req, res) => {
+  app.route('/profile').get(ensureAuthenticated, (req, res) => {
     res.render(process.cwd() + '/views/pug/profile');
   });
 
@@ -86,6 +86,13 @@ app.route('/').get((req, res) => {
   res.render(process.cwd() + '/views/pug/index', {title:'Hello', message:'Please login'});
 });
 */
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
