@@ -37,7 +37,7 @@ myDB(async (client) => {
       title: 'Connected to Database',
       message: 'Please logie',
       showLogin: true,
-      showRegister: true
+      showRegistration: true
     });
   });
 
