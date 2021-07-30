@@ -8,6 +8,7 @@ const { allowedNodeEnvironmentFlags } = require('process');
 const session = require('express-session');
 const passport = require('passport');
 const ObjectID = require('mongodb').ObjectID;
+const LocalStrategy = require('passport-local').Strategy;
 
 const app = express();
 
@@ -50,6 +51,18 @@ myDB(async (client) => {
     });
     
   });
+
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+      myDataBase.findOne({ username: username }, (err, user) => {
+        console.log('User '+ username +' attempted to log in.');
+        if (err) { return done(err); }
+        if (!user) { return done(null, false, { message: 'Incorrect username.' }); }
+        if (!user.authenticate(password)) { return done(null, false, { message: 'Incorrect password.' }); }
+        return done(null, user);
+      });
+  }));
+
 }).catch((err) => {
   app.route('/').get((req, res) => {
     res.render(process.cwd() + '/views/pug/index', {
