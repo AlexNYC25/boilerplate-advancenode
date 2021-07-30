@@ -107,7 +107,7 @@ myDB(async (client) => {
         console.log('User '+ username +' attempted to log in.');
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Incorrect username.' }); }
-        if (!user.authenticate(password)) { return done(null, false, { message: 'Incorrect password.' }); }
+        if (password !== user.password) { return done(null, false); }
         return done(null, user);
       });
   }));
